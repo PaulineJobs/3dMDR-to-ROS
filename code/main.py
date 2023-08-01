@@ -87,7 +87,11 @@ def create_pgm_file (converted_folder_path,filename, origin = " ", negate=" ", o
     if not (file_exists(converted_folder_path, pgm_filename)):
         with open(converted_folder_path + pgm_filename, "w") as f:
             f.write("P2\n")
-            f.write(f"{width} {height}\n")
+            if depth == 1:
+                f.write(f"{width} {height} \n")
+            else :
+                f.write(f"{width} {height} {depth}\n")
+
             f.write("255\n")
             for point in list_of_points:
                f.write(f"{point} ")
