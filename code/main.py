@@ -56,7 +56,7 @@ def get_thresh(data):
 def get_information_for_pgm_file_from_json_file(filename, original_folder_path) :
     with open(original_folder_path+filename, "r") as f:
         data = json.load(f)
-        pgm_filename = split_name_extension(data["properties"]["localmap_id"])[0]+"pgm"
+        pgm_filename = split_name_extension(data["properties"]["localmap_id"])[0]+".pgm"
         list_of_points = data["properties"]["list_of_voxels"]
         width = data["properties"]["size"][0]
         height = data["properties"]["size"][1]
