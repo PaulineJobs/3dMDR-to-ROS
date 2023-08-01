@@ -107,7 +107,7 @@ def remove_converted_folder(folder_path):
 
 
 if __name__ == '__main__':
-    print("Hello ! \n")
+    print("Hello ! ")
     print("Here you can convert 2D MDR files (.json) into ROS Gridmap files (yaml+pgm)")
     while True :
         user_input = input ("Please, press enter to convert files located in the folder Map-converter/Test_Files/MDR_files/")
