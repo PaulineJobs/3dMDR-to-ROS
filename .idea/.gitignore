@@ -1,4 +1,4 @@
 # Default ignored files
 /shelf/
 /workspace.xml
-../Test_Files/ROS_files/
+../Test_Files/ROS_files/*
