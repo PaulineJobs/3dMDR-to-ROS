@@ -4,8 +4,12 @@ import json
 # Declare the path of the pathway to the folders
 original_folder_path = "../Test_Files/MDR_files/"
 converted_folder_path = "../Test_Files/ROS_files/"
+# Default thresholds
+free_thresh = "0.196"
+occupied_thresh = "0.65"
 
-# Function to check if the file exists and correspond to the pathway
+
+# Check if the file exists and correspond to the pathway
 def file_exists (converted_folder_path, filename):
     # Check if the file exists using os.path.exists()
     if os.path.exists(converted_folder_path+filename):
@@ -13,22 +17,23 @@ def file_exists (converted_folder_path, filename):
     else:
         return False
 
-# Function to split the filename into file and extension
+# Split the filename into file and extension
 def split_name_extension(filename):
     extracted = filename.split(".")
     file, extension = extracted[0],extracted[1]
     return file,extension
 
+# Read the json file and get information needed
 def get_information_for_yaml_file_from_json_file(filename, original_folder_path):
     with open(original_folder_path+filename, "r") as f:
         data = json.load(f)
         resolution = get_resolution(data)
-        negate = get_negate(data)
-        treshold = get_thresh(data)
+        negate = set_negate(data)
         yaml_filename = get_yaml_filename(data)
         origin = "[0,0,0]"
-        return resolution, negate, treshold, yaml_filename, origin
+        return resolution, negate, yaml_filename, origin
 
+# Get the resolution form json data in the correct format for the yaml file
 def get_resolution(data):
         resolution = data["properties"]["resolution"]
         string_resolution = "[ "
@@ -39,20 +44,16 @@ def get_resolution(data):
         string_resolution+=" ]"
         return string_resolution
 
-def get_negate(data):
+#Set the negate
+def set_negate(data):
     return str(0)
 
+# Get the name of the future yaml file
 def get_yaml_filename(data):
         yaml_filename = data["properties"]["localmap_id"]
         return yaml_filename
 
-def get_thresh(data):
-    list_of_voxels = data["properties"]["list_of_voxels"]
-    sorted_list_of_voxels = sorted(list_of_voxels)
-    half_of_values = (sorted_list_of_voxels[0]+sorted_list_of_voxels[len(sorted_list_of_voxels)-1])/2
-    thresh = half_of_values/sorted_list_of_voxels[len(sorted_list_of_voxels)-1]
-    return str(thresh)
-
+#Get information from the json file data needed for the pgm file
 def get_information_for_pgm_file_from_json_file(filename, original_folder_path) :
     with open(original_folder_path+filename, "r") as f:
         data = json.load(f)
@@ -66,9 +67,9 @@ def get_information_for_pgm_file_from_json_file(filename, original_folder_path) 
 
 
 
-# Function to create yaml file
-def create_yaml_file (converted_folder_path,filename, origin = " ", negate=" ", occupied_tresh=" ", free_tresh=" "  ):
-    resolution, negate, treshold, yaml_filename, origin = get_information_for_yaml_file_from_json_file(filename, original_folder_path)
+# Create yaml file
+def create_yaml_file (converted_folder_path,filename ):
+    resolution, negate, yaml_filename, origin = get_information_for_yaml_file_from_json_file(filename, original_folder_path)
     # Check if the file already exists
     if not (file_exists(converted_folder_path, yaml_filename)):
         # Open the file and write the basic yaml structure
@@ -77,11 +78,11 @@ def create_yaml_file (converted_folder_path,filename, origin = " ", negate=" ", 
         f.write("resolution: " + resolution +"\n")
         f.write("origin: " + origin+"\n")
         f.write("negate: " + negate +"\n")
-        f.write("occupied_tresh: " + treshold +"\n")
-        f.write("free_tresh: " + treshold +"\n")
+        f.write("occupied_tresh: " + occupied_thresh +"\n")
+        f.write("free_tresh: " + free_thresh +"\n")
         f.close()
 
-
+#Create pgm file
 def create_pgm_file (converted_folder_path,filename, origin = " ", negate=" ", occupied_tresh=" ", free_tresh=" "  ):
     list_of_points, width, height, depth, pgm_filename = get_information_for_pgm_file_from_json_file(filename, original_folder_path)
     if not (file_exists(converted_folder_path, pgm_filename)):
@@ -97,13 +98,13 @@ def create_pgm_file (converted_folder_path,filename, origin = " ", negate=" ", o
                f.write(f"{point} ")
             f.close()
 
-# Function to convert all files in a folder
+# Convert all files in a folder
 def convert_folder(original_folder_path,converted_folder_path) :
     for filename in os.listdir(original_folder_path):
         create_yaml_file(converted_folder_path, filename)
         create_pgm_file(converted_folder_path, filename)
 
-# Function to remove the converted files
+# Remove the converted files
 def remove_converted_folder(folder_path):
     for filename in os.listdir(folder_path):
         os.remove(folder_path+filename)
@@ -112,9 +113,9 @@ def remove_converted_folder(folder_path):
 
 if __name__ == '__main__':
     print("Hello ! ")
-    print("Here you can convert 2D MDR files (.json) into ROS Gridmap files (yaml+pgm)")
+    print("Here you can convert 3D MDR files (.json) into ROS Gridmap files (yaml+pgm)")
     while True :
-        user_input = input ("Please, press enter to convert files located in the folder Map-converter/Test_Files/MDR_files/")
+        user_input = input ("Please, press enter to convert files located in the folder Test_Files/MDR_files/")
         if user_input == '' :
             break
     print("Please wait....")
@@ -123,7 +124,7 @@ if __name__ == '__main__':
     # Convert all files in the original folder
     convert_folder(original_folder_path,converted_folder_path)
     print("Conversion done")
-    print("Converted files are located in Map-converter/Test_Files/ROS_files/")
+    print("Converted files are located in Test_Files/ROS_files/")
 
 
 

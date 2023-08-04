@@ -2,5 +2,5 @@ image: map_20180924_12h.yaml
 resolution: [ 0.1, 0.1, 0.1 ]
 origin: [0,0,0]
 negate: 0
-occupied_tresh: 0.5
-free_tresh: 0.5
+occupied_tresh: 0.65
+free_tresh: 0.196

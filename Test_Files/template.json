@@ -1,0 +1,19 @@
+{
+    "$id": " ",
+    "title": " ",
+    "description": " ",
+    "type": " ",
+    "properties": {
+        "localmap_id": " ",
+        "time": " ",
+        "map_description": " ",
+        "coordinate_system": " ",
+        "resolution": [],
+        "size": [],
+        "list_of_characteristics": {
+            "C_description": " "
+        },
+        "list_of_voxels": []
+        }
+ }
+ 

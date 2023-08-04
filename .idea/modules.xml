@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Map-converter.iml" filepath="$PROJECT_DIR$/.idea/Map-converter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/3dMDR-to-ROS.iml" filepath="$PROJECT_DIR$/.idea/3dMDR-to-ROS.iml" />
     </modules>
   </component>
 </project>
