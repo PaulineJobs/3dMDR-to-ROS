@@ -5,7 +5,7 @@ Converts 3D MDR files (.json format) into ROS files (yaml+pgm format)
 
 
 ## Context :
-Internship at Örebro University, supervised by Martin Magnusson 
+Internship at Örebro University in 2023, supervised by Martin Magnusson 
 
 
 ## How to use the converter ?
