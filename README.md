@@ -1,4 +1,4 @@
-# Map-converter
+# 3dMDR-to-ROS
 
 ## Description :
 Convert 3D MDR files (.json format) into ROS files (yaml+pgm format)
